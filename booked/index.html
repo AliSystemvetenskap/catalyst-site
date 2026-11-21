@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CATALYST | You're Booked</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bone:#F3F1EA;--navy:#1A2744;--navy-deep:#111A2E;--gold:#D9B45C}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--navy-deep);color:var(--bone);font-family:Archivo,system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+  header{padding:26px 24px;text-align:center}
+  .logo{font-family:Fraunces,Georgia,serif;font-size:26px;font-weight:500;letter-spacing:.04em;color:var(--bone);text-decoration:none}
+  main{flex:1;width:100%;max-width:640px;margin:0 auto;padding:40px 20px 60px;text-align:center;position:relative}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:8px 16px;border:1px solid rgba(217,180,92,.45);border-radius:999px;color:var(--gold)}
+  .tick{width:64px;height:64px;border-radius:50%;background:var(--gold);color:var(--navy-deep);display:flex;align-items:center;justify-content:center;margin:0 auto 26px}
+  h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(40px,8vw,64px);line-height:1.04;letter-spacing:-.01em;margin:22px 0 16px}
+  h1 .it{font-style:italic;color:var(--gold)}
+  .sub{color:rgba(243,241,234,.78);max-width:34ch;margin:0 auto}
+  .card{margin:44px 0 0;text-align:left;border:1px solid rgba(217,180,92,.3);border-radius:8px;padding:28px 26px;background:rgba(243,241,234,.03)}
+  .card h2{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+  ol{list-style:none;counter-reset:s}
+  li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:14px;padding:16px 0;border-top:1px solid rgba(243,241,234,.1)}
+  li:first-child{border-top:0;padding-top:4px}
+  li::before{content:counter(s);width:34px;height:34px;border-radius:50%;border:1px solid rgba(217,180,92,.5);color:var(--gold);font-family:Fraunces,serif;font-size:17px;display:flex;align-items:center;justify-content:center}
+  li b{display:block;font-weight:600;color:var(--bone)}
+  li span{color:rgba(243,241,234,.72);font-size:15.5px}
+  .note{margin-top:26px;font-size:14.5px;color:rgba(243,241,234,.6)}
+  footer{text-align:center;padding:24px;font-size:13px;color:rgba(243,241,234,.45)}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">CATALYST</a></header>
+<main>
+  <div class="tick" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+  <span class="pill">You're booked</span>
+  <h1>See you on <span class="it">the call.</span></h1>
+  <p class="sub">The calendar invite and Google Meet link are on their way to your email.</p>
+
+  <section class="card">
+    <h2>Before the call</h2>
+    <ol>
+      <li><div><b>Have Ads Manager open and logged in.</b><span>We'll go through your ad account together on screen share.</span></div></li>
+      <li><div><b>Know roughly what one order costs you</b><span>to make and ship, fees included. We'll use it to work out your break-even.</span></div></li>
+      <li><div><b>Bring the one question</b><span>you most want answered about your ads.</span></div></li>
+    </ol>
+  </section>
+
+  <p class="note">Can't make it anymore? Use the reschedule link in your confirmation email.</p>
+</main>
+<footer>&copy; 2026 CATALYST</footer>
+</body>
+</html>
