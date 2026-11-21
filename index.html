@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Catalyst | Meta ads + email for ecom brands</title>
+<meta name="description" content="A 6-week growth program: we run Meta ads, email + SMS and store fixes for ecom brands doing $10k to $100k a month.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#F3F1EA; --bone-2:#EAE7DC;
+    --navy:#1A2744; --navy-deep:#111A2E; --ink:#1B2340;
+    --gold:#D9B45C; --gold-2:#9C7A22;
+    --muted:#6E6A5E; --hair:#D8D3C4; --hair-dark:#2E3A57;
+    --paper-on-navy:#EDEAE0; --muted-on-navy:#93A0BB;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bone);color:var(--ink);font-family:Archivo,system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:500;line-height:1.06;letter-spacing:-.01em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 34px}
+  section{padding:108px 0;scroll-margin-top:88px}
+  .center{text-align:center}
+
+  /* labels */
+  .eyebrow{font-size:14px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2);display:inline-flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+  .lbl{display:block;text-align:center;font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-2)}
+  .h2c{font-size:clamp(30px,4vw,50px);text-align:center;margin:14px auto 12px;max-width:22ch}
+  .subc{text-align:center;color:var(--muted);max-width:52ch;margin:0 auto}
+  .foil{background:linear-gradient(105deg,#F1D689,#D9B45C 50%,#BE933C);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .foil-ink{background:linear-gradient(105deg,#B8922F,#8C6A18);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .it{font-style:italic;font-weight:400}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;font-family:Archivo,sans-serif;font-size:14px;font-weight:600;letter-spacing:.02em;padding:13px 24px;border-radius:2px;transition:.22s;cursor:pointer;border:1px solid var(--navy);white-space:nowrap}
+  .btn-lg{padding:17px 32px;font-size:15px}
+  .btn-primary{background:var(--navy);color:var(--bone)}
+  .btn-primary:hover{background:var(--navy-deep);transform:translateY(-1px)}
+  .btn-gold{background:var(--gold);color:var(--navy-deep);border-color:var(--gold);animation:goldPulse 2.6s ease-in-out infinite}
+  .btn-gold:hover{background:#E6C877;border-color:#E6C877;transform:translateY(-1px);animation-play-state:paused;box-shadow:0 0 42px 4px rgba(217,180,92,.85)}
+  @keyframes goldPulse{0%,100%{box-shadow:0 0 18px 0 rgba(217,180,92,.42)}50%{box-shadow:0 0 34px 3px rgba(217,180,92,.78)}}
+  .after{text-align:center;margin-top:38px}
+
+  /* header */
+  header{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .35s,border-color .35s;border-bottom:1px solid transparent}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px}
+  .logo{font-family:Fraunces,Georgia,serif;font-size:26px;font-weight:500;letter-spacing:.04em;color:var(--bone);transition:color .35s}
+  .nav .btn{padding:10px 20px}
+  header:not(.scrolled) .nav .btn{background:transparent;color:var(--bone);border-color:rgba(237,234,224,.45)}
+  header:not(.scrolled) .nav .btn:hover{border-color:var(--gold);color:var(--gold)}
+  header.scrolled{background:rgba(243,241,234,.86);-webkit-backdrop-filter:saturate(120%) blur(12px);backdrop-filter:saturate(120%) blur(12px);border-bottom:1px solid var(--hair)}
+  header.scrolled .logo{color:var(--navy)}
+
+  /* hero */
+  .hero{position:relative;background:var(--navy-deep);color:var(--paper-on-navy);padding:140px 0 90px;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 80% 8%,rgba(217,180,92,.14),transparent 52%),radial-gradient(90% 80% at 0% 100%,rgba(26,39,68,.65),transparent 60%);pointer-events:none}
+  .hero-ghost{position:absolute;left:50%;bottom:-0.18em;transform:translateX(-50%);font-family:Fraunces,serif;font-weight:500;font-size:min(22vw,300px);line-height:1;letter-spacing:.02em;color:var(--bone);opacity:.045;pointer-events:none;user-select:none;white-space:nowrap}
+  .hero-inner{position:relative;z-index:2;max-width:980px;margin:0 auto;text-align:center}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:8px 16px;border:1px solid rgba(217,180,92,.45);border-radius:999px;color:var(--gold)}
+  .hero h1{font-size:clamp(36px,5.2vw,68px);color:var(--bone);max-width:20ch;margin:26px auto 18px}
+  .watch{color:var(--muted-on-navy);font-size:17px;margin-bottom:20px}
+  .checks{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+  .checks span{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;padding:8px 14px;border-radius:999px;background:rgba(217,180,92,.12);color:var(--bone);border:1px solid rgba(217,180,92,.3)}
+  .checks svg{color:var(--gold);flex:none}
+  .vid{position:relative;width:100%;max-width:380px;margin:0 auto 38px;aspect-ratio:9/16;border-radius:10px;overflow:hidden;border:1px solid var(--hair-dark);background:#0C1322;box-shadow:0 40px 90px -40px rgba(0,0,0,.8)}
+  .vid video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#0C1322}
+  .vid .ph{position:absolute;inset:0;display:none;flex-direction:column;gap:18px;align-items:center;justify-content:center;color:var(--muted-on-navy);font-size:14px;letter-spacing:.14em;text-transform:uppercase}
+  .vid .ph span{width:74px;height:74px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--navy-deep);padding-left:4px}
+  .vid.is-empty video{display:none}
+  .vid.is-empty .ph{display:flex}
+  .under{margin-top:16px;font-size:13px;color:var(--muted-on-navy);letter-spacing:.04em}
+  .under b{color:var(--gold);font-weight:600}
+
+  /* results */
+  .results{background:var(--bone-2)}
+  .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:52px}
+  .case{background:var(--bone);border:1px solid var(--hair);border-radius:8px;padding:30px 28px;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s}
+  .case:hover{transform:translateY(-3px);box-shadow:0 22px 46px -28px rgba(26,39,68,.4)}
+  .case-tag{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-2);font-weight:600}
+  .case-num{font-family:Fraunces,serif;font-size:clamp(40px,4.6vw,56px);font-weight:500;line-height:1;margin:12px 0 6px;padding-bottom:4px}
+  .case-sub{font-size:14px;color:var(--muted);margin-bottom:26px}
+  .shot{margin-top:auto;background:#fff;border:1px solid var(--hair);border-radius:8px;overflow:hidden;box-shadow:0 12px 32px -20px rgba(26,39,68,.55)}
+  .shot .bar{display:flex;gap:6px;padding:10px 13px;background:#F1F0EC;border-bottom:1px solid #E7E4DA}
+  .shot .bar span{width:9px;height:9px;border-radius:50%;background:#CBC6B7}
+  .shot img{display:block;width:100%;height:auto}
+  .shot .pad{padding:14px 16px}
+  .more-res{margin-top:64px}
+  .more-h{font-family:Fraunces,serif;font-weight:500;font-size:clamp(22px,2.4vw,30px);text-align:center;margin-bottom:28px}
+  .more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;align-items:start}
+  .mcol{display:flex;flex-direction:column;gap:26px}
+  .mr figcaption{margin-top:12px;font-size:15px;color:var(--muted);text-align:center}
+  .mr figcaption b{color:var(--navy);font-weight:700}
+  .more-note{margin-top:22px;font-size:13px;color:var(--muted);text-align:center}
+  .cases{grid-template-columns:repeat(2,1fr)}
+  .hlwrap{position:relative;display:block;overflow:hidden}
+  .shot .hlwrap,.shot .pad,.shot .pair,.shot .split-crop{border:7px solid #2B3A72;border-top-width:7px}
+  .shot .pad,.shot .pair{background:#fff}
+  .shot .pad .hlwrap{border:0}
+  .mask{position:absolute;background:#fff}
+  .mr .shot .hlwrap,.mr .shot .pad,.mr .shot .pair,.mr .shot .split-crop{border:0}
+  .hlwrap img{display:block;width:100%;height:auto}
+  /* crops of wide screenshots so the numbers stay readable */
+  .pair{display:flex;gap:8px;padding:8px 10px}
+  .crop{position:relative;overflow:hidden;width:100%;min-width:0;flex:1 1 0;aspect-ratio:362/119}
+  .crop img{position:absolute;top:0;height:auto;max-width:none;width:415.2%}
+  .crop.c1 img{left:0}
+  .crop.c4 img{left:-315.2%}
+  .split-full{display:block}
+  .split-crop{display:none;aspect-ratio:315/86}
+  .split-crop img{width:200.3%;left:0}
+
+  /* included */
+  .stack{max-width:860px;margin:0 auto;background:#fff;border:1px solid var(--hair);border-radius:10px;padding:40px 44px;box-shadow:0 30px 70px -45px rgba(17,26,46,.45)}
+  .stack .top{display:flex;justify-content:center;margin-bottom:26px;font-family:Fraunces,serif;font-size:24px;font-weight:500;color:var(--navy);letter-spacing:.04em}
+  .row{display:flex;align-items:center;gap:16px;padding:13px 0;font-size:16px}
+  .row .ln{flex:1 1 0;border-bottom:1px solid var(--hair);margin:0 4px;transform:translateY(-4px)}
+  .bonus-sep{height:1px;background:#E2DED2;margin:14px 0}
+  .row.bonus{font-weight:600;color:var(--navy)}
+  .tag.gold{background:#D9B45C;color:#111A2E}
+  .photo.has-img{background:none;padding:0;overflow:hidden}
+  .photo.has-img img{display:block;width:100%;height:100%;object-fit:cover}
+  .photo.has-img::before,.photo.has-img::after{display:none}
+  .tools{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:46px}
+  .tool{background:#fff;border:1px solid var(--hair);border-radius:10px;overflow:hidden}
+  .tool .art{height:120px;background:linear-gradient(135deg,var(--navy-deep,#111A2E),var(--navy));display:flex;align-items:center;justify-content:center;font-family:Fraunces,serif;font-style:italic;font-size:26px;color:var(--gold,#D9B45C);padding:0 16px;text-align:center}
+  .tool .body{padding:20px 22px 24px}
+  .tool .meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .tool .tag{font-size:11px;padding:4px 10px;background:rgba(217,180,92,.2);color:var(--gold-2,#9C7A22)}
+  .tool h3{font-family:Archivo,sans-serif;font-size:17px;font-weight:700;margin-bottom:6px}
+  .tool p{font-size:14px;color:var(--muted)}
+  @media (max-width:900px){.tools{grid-template-columns:1fr 1fr;gap:12px}.tool .art{height:64px;font-size:17px;padding:0 10px}.tool .body{padding:12px 12px 14px}.tool .meta{font-size:9px;letter-spacing:.1em;margin-bottom:6px}.tool .tag{font-size:9px;padding:3px 6px}.tool h3{font-size:14px;line-height:1.25}.tool p{font-size:12.5px;line-height:1.4}}
+  .guarbox{max-width:860px;margin:0 auto;text-align:center;border:1px solid var(--gold-2);border-radius:10px;padding:46px 40px;background:var(--bone)}
+  .guarbox h2{font-size:clamp(26px,3.2vw,40px);margin:14px auto 16px;max-width:22ch}
+  .guarbox p{color:var(--muted);max-width:56ch;margin:0 auto 28px}
+  @media (max-width:640px){.guarbox{padding:34px 22px}}
+  .tag{font-size:12px;font-weight:600;padding:6px 13px;border-radius:999px;background:var(--navy);color:var(--bone);white-space:nowrap}
+
+  /* why me */
+  .split{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+  .split h2{font-size:clamp(30px,3.8vw,48px);margin:14px 0 20px}
+  .split p{margin-bottom:16px;max-width:52ch}
+  .split .btn{margin-top:14px}
+  .photo{width:100%;aspect-ratio:4/5;border-radius:10px;border:1px solid var(--hair);box-shadow:0 34px 70px -38px rgba(17,26,46,.55);background:repeating-linear-gradient(135deg,#E6E2D6 0 14px,#DFDACC 14px 28px);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase}
+
+  /* number cards */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:46px}
+  .ncard{background:#fff;border:1px solid var(--hair);border-radius:10px;padding:28px 26px;position:relative}
+  .ncard .num{position:absolute;top:22px;right:24px;font-family:Fraunces,serif;font-size:30px;color:var(--hair)}
+  .ncard .ic{width:38px;height:38px;border-radius:8px;background:rgba(217,180,92,.18);display:flex;align-items:center;justify-content:center;color:var(--gold-2);margin-bottom:18px}
+  .ncard h3{font-family:Archivo,sans-serif;font-size:18px;font-weight:700;margin-bottom:8px}
+  .ncard p{font-size:15px;color:var(--muted)}
+  .steps .ncard .ic{background:var(--gold);color:var(--navy-deep);font-weight:700;font-size:15px;border-radius:50%}
+  .navysec{background:var(--navy);color:var(--paper-on-navy)}
+  .navysec .h2c{color:var(--bone)}
+  .navysec .subc{color:var(--muted-on-navy)}
+  .navysec .lbl{color:var(--gold)}
+  .navysec .ncard{background:rgba(255,255,255,.04);border-color:var(--hair-dark)}
+  .navysec .ncard h3{color:var(--bone)}
+  .navysec .ncard p{color:var(--muted-on-navy)}
+  .navysec .ncard .num{color:var(--hair-dark)}
+
+  /* fit */
+  .fit-title{text-align:center;font-size:clamp(28px,3.6vw,44px);margin-bottom:48px}
+  .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:8px}
+  .fit-col{background:var(--bone);border:1px solid var(--hair);border-radius:4px;padding:36px}
+  .fit-col.no{background:transparent;border-style:dashed}
+  .fit-col h3{font-family:Archivo,sans-serif;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:22px}
+  .fit-col.yes h3{color:var(--gold-2)}
+  .fit-col.no h3{color:var(--muted)}
+  .fit-col ul{list-style:none}
+  .fit-col li{font-size:16px;padding:12px 0 12px 28px;position:relative;border-bottom:1px solid var(--hair)}
+  .fit-col li:last-child{border-bottom:none}
+  .fit-col.no li{color:var(--muted)}
+  .fit-col li::before{position:absolute;left:0;top:11px;font-family:Fraunces,serif;font-size:16px;line-height:1}
+  .fit-col.yes li::before{content:"\2014";color:var(--gold-2)}
+  .fit-col.no li::before{content:"\00D7";color:var(--muted)}
+
+  /* faq */
+  .faq h2{font-size:clamp(28px,3.6vw,46px);margin-bottom:38px;margin-top:12px}
+  .faq-list{border-top:1px solid var(--hair)}
+  details{border-bottom:1px solid var(--hair)}
+  summary{list-style:none;cursor:pointer;padding:26px 44px 26px 0;position:relative;font-family:Fraunces,serif;font-size:clamp(19px,2.1vw,24px);font-weight:500;color:var(--ink);transition:color .2s}
+  summary:hover{color:var(--gold-2)}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:Archivo,sans-serif;font-size:26px;font-weight:400;color:var(--gold-2);transition:transform .25s}
+  details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+  details .ans{padding:0 60px 28px 0;color:var(--muted);font-size:16px;max-width:70ch}
+
+  /* final cta */
+  .cta{background:var(--navy-deep);color:var(--bone);text-align:center;padding:132px 0;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 70% at 50% 0%,rgba(217,180,92,.12),transparent 60%);pointer-events:none}
+  .cta .wrap{position:relative;z-index:2}
+  .cta h2{font-size:clamp(32px,4.6vw,60px);max-width:18ch;margin:14px auto 26px;color:var(--bone)}
+  .panel{max-width:620px;margin:0 auto;background:rgba(255,255,255,.04);border:1px solid var(--hair-dark);border-radius:12px;padding:40px 36px;text-align:left}
+  .panel ul{list-style:none;margin:6px 0 28px}
+  .panel li{display:flex;gap:10px;align-items:center;padding:9px 0;color:var(--paper-on-navy);font-size:16px}
+  .panel li svg{color:var(--gold);flex:none}
+  .panel .btn{width:100%}
+  .panel .note{text-align:center;margin-top:16px;font-size:14px;font-style:italic;color:var(--gold)}
+
+  footer{background:#0C1322;color:var(--muted-on-navy);padding:60px 0 44px}
+  .foot{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:28px}
+  .foot .logo{color:var(--bone);font-size:28px}
+  .foot-links{display:flex;gap:26px;font-size:14px}
+  .foot-links a:hover{color:var(--gold)}
+  .copyright{margin-top:44px;font-size:12px;color:#4C596F;letter-spacing:.02em}
+
+  @media (max-width:900px){
+    .split{grid-template-columns:1fr;gap:36px}
+    .photo{max-width:420px}
+    .grid3,.fit-grid{grid-template-columns:1fr}
+    .cases{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto}
+  }
+  @media (max-width:760px){
+    .more-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 22px}
+    section{padding:78px 0}
+    .hero{padding:118px 0 78px}
+    .stack{padding:28px 20px}
+    .row{font-size:15px}
+    .row .ln{display:none}
+    .row span:first-child{flex:1 1 0}
+    .panel{padding:30px 22px}
+    .fit-col{padding:28px 22px}
+    .case{padding:24px 16px}
+    .mr .pair{padding:6px 8px}
+    details .ans{padding-right:0}
+    .pair{flex-direction:row;gap:6px}
+    .pair .crop{flex:1 1 0}
+    .split-full{display:block}
+    .split-crop{display:none}
+    .nav .btn{padding:9px 14px;font-size:13px}
+    .logo{font-size:23px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+    .btn-gold{animation:none;box-shadow:0 0 22px 0 rgba(217,180,92,.5)}
+  }
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="Catalyst home">CATALYST</a>
+    <a href="{{CALENDLY_URL}}" class="btn btn-primary">Free Ads Breakdown</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- 1. Hero -->
+<section class="hero">
+  <div class="hero-ghost" aria-hidden="true">CATALYST</div>
+  <div class="wrap hero-inner">
+    <span class="pill">Catalyst · 6-week growth program</span>
+    <h1>Let us run your whole growth for 6 weeks <span class="it foil">and stop doing it all yourself.</span></h1>
+    <p class="watch">Watch the video below to see how it works.</p>
+    <div class="checks">
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Run inside your own accounts</span>
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Your current ads keep running</span>
+    </div>
+    <div class="vid" id="vid">
+      <video controls playsinline preload="metadata" poster="vsl-poster.jpg">
+        <source src="vsl.mp4" type="video/mp4" onerror="document.getElementById('vid').classList.add('is-empty')">
+      </video>
+      <div class="ph"><span><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>VSL goes here</div>
+    </div>
+    <div><a href="{{CALENDLY_URL}}" class="btn btn-gold btn-lg">Get Your Free Ads Breakdown</a></div>
+    <p class="under"><b>3 client spots</b> · ecommerce brands doing $10k to $100k a month</p>
+  </div>
+</section>
+
+<!-- 2. Results -->
+<section class="results" id="results">
+  <div class="wrap">
+    <span class="lbl">Results</span>
+    <h2 class="h2c">Real numbers from real brands.</h2>
+
+    <div class="cases">
+      <article class="case">
+        <span class="case-tag">Clothing brand</span>
+        <div class="case-num foil-ink">€36.3K</div>
+        <div class="case-sub">in sales in one month</div>
+        <div class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="hlwrap"><img src="proof/brand-a-30d-home.png" alt="Shopify home: total sales €36,297.44, last 30 days" loading="lazy"><span class="mask" style="left:26%;top:3.5%;width:16%;height:10%"></span></div></div>
+      </article>
+      <article class="case">
+        <span class="case-tag">Eyewear brand</span>
+        <div class="case-num foil-ink">$28.8K</div>
+        <div class="case-sub">in sales in one month</div>
+        <div class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="hlwrap"><img src="proof/brand-b-30d-home.png" alt="Shopify home: total sales US$28,772.63, last 30 days" loading="lazy"><span class="mask" style="left:32.5%;top:3.5%;width:16%;height:10%"></span></div></div>
+      </article>
+      <article class="case">
+        <span class="case-tag">Dropshipping store</span>
+        <div class="case-num foil-ink">€148.6K</div>
+        <div class="case-sub">in sales in 90 days, up 339%</div>
+        <div class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="hlwrap"><img src="proof/brand-c-90d-home.png" alt="Shopify home: total sales €148,628.19, up 339%, last 90 days" loading="lazy"></div></div>
+      </article>
+      <article class="case">
+        <span class="case-tag">Email + SMS</span>
+        <div class="case-num foil-ink">€6,614</div>
+        <div class="case-sub">from email + SMS in one month</div>
+        <div class="shot"><div class="bar"><span></span><span></span><span></span></div><div class="pad"><div class="hlwrap"><img src="proof/klaviyo-30d-attributed.png" alt="Klaviyo attributed revenue: €6,614.39 in the last 30 days" loading="lazy"></div></div></div>
+      </article>
+    </div>
+
+    <div class="more-res">
+      <h3 class="more-h">More results from accounts we've run</h3>
+      <div class="more-grid">
+        <div class="mcol">
+          <figure class="mr">
+            <div class="shot"><div class="bar"><span></span><span></span><span></span></div>
+              <div class="pair">
+                <div class="crop c1"><img src="proof/brand-a-30d-kpis.png" alt="Gross sales €63.7K" loading="lazy"></div>
+                <div class="crop c4"><img src="proof/brand-a-30d-kpis.png" alt="Orders 481" loading="lazy"></div>
+              </div>
+            </div>
+            <figcaption><b>481</b> orders and <b>€63.7K</b> in gross sales in one month</figcaption>
+          </figure>
+          <figure class="mr">
+            <div class="shot"><div class="bar"><span></span><span></span><span></span></div>
+              <div class="pair">
+                <div class="crop c1"><img src="proof/brand-b-30d-kpis.png" alt="Gross sales US$43.9K" loading="lazy"></div>
+                <div class="crop c4"><img src="proof/brand-b-30d-kpis.png" alt="Orders 650" loading="lazy"></div>
+              </div>
+            </div>
+            <figcaption><b>650</b> orders and <b>$43.9K</b> in gross sales in one month</figcaption>
+          </figure>
+        </div>
+        <div class="mcol">
+          <figure class="mr">
+            <div class="shot"><div class="bar"><span></span><span></span><span></span></div>
+              <div class="pair">
+                <div class="crop c1"><img src="proof/brand-c-90d-kpis.png" alt="Gross sales €202.7K" loading="lazy"></div>
+                <div class="crop c4"><img src="proof/brand-c-90d-kpis.png" alt="Orders 1,714" loading="lazy"></div>
+              </div>
+            </div>
+            <figcaption><b>1,714</b> orders and <b>€202.7K</b> in gross sales in 90 days</figcaption>
+          </figure>
+          <figure class="mr">
+            <div class="shot"><div class="bar"><span></span><span></span><span></span></div>
+              <div class="pad split-full"><div class="hlwrap"><img src="proof/klaviyo-30d-split.png" alt="Klaviyo revenue split: flows €5,051.56" loading="lazy"></div></div>
+              <div class="crop split-crop"><img src="proof/klaviyo-30d-split.png" alt="Klaviyo revenue split: flows €5,051.56" loading="lazy"></div>
+            </div>
+            <figcaption><b>€5,051</b> in sales from automated flows in one month</figcaption>
+          </figure>
+        </div>
+      </div>
+      <p class="more-note">Past client results. Results vary by brand.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. What's included -->
+<section>
+  <div class="wrap">
+    <div class="stack">
+      <div class="top">CATALYST</div>
+      <div class="row"><span>Kickoff call with a live audit of your ad account</span><span class="ln"></span><span class="tag">Included</span></div>
+      <div class="row"><span>Your Ads Manager columns set up to show what matters</span><span class="ln"></span><span class="tag">Included</span></div>
+      <div class="row"><span>Meta ads, creatives, email + SMS and store, all run for you</span><span class="ln"></span><span class="tag">Included</span></div>
+      <div class="row"><span>6 weekly 1-on-1 calls on what we're running in your account</span><span class="ln"></span><span class="tag">Included</span></div>
+      <div class="row"><span>A short video each week on what we're putting in place</span><span class="ln"></span><span class="tag">Included</span></div>
+      <div class="row"><span>Message me any time</span><span class="ln"></span><span class="tag">Included</span></div>
+      <div class="bonus-sep"></div>
+      <div class="row bonus"><span>Founding client bonus: 2 extra weeks of support</span><span class="ln"></span><span class="tag gold">First 3 only</span></div>
+    </div>
+    <div class="after"><a href="{{CALENDLY_URL}}" class="btn btn-gold btn-lg">Get Your Free Ads Breakdown</a></div>
+  </div>
+</section>
+
+<!-- 4. Why me -->
+<section style="padding-top:20px">
+  <div class="wrap split">
+    <div>
+      <span class="eyebrow">Why me</span>
+      <h2>I run this system for brands every day.</h2>
+      <p>I run CATALYST, a done-for-you ad agency for ecommerce brands. This program is the same system we use for our clients, built inside your own account instead of ours.</p>
+      <p><b>You end up owning it.</b> No monthly retainer to keep the results coming, and nothing leaves when the program ends.</p>
+      <a href="#how" class="btn btn-primary">See how it works</a>
+    </div>
+    <div class="photo has-img"><img src="alosh.webp" alt="Alosh, founder of CATALYST" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- 5. Why it works -->
+<section style="background:var(--bone-2)">
+  <div class="wrap">
+    <span class="lbl">The system</span>
+    <h2 class="h2c">Why owning your ads system is worth it:</h2>
+    <p class="subc">A good month should be something you can repeat on purpose.</p>
+    <div class="grid3">
+      <div class="ncard"><span class="num">01</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"></circle><path d="M11 12l9-9M17 6l3 3"></path></svg></div><h3>No More Renting Results</h3><p>When an agency leaves, its results leave too. A system you own stays with you.</p></div>
+      <div class="ncard"><span class="num">02</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path></svg></div><h3>Numbers You Trust</h3><p>Know your break-even and what you keep after costs, so every decision is based on real profit.</p></div>
+      <div class="ncard"><span class="num">03</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6L4 20h16L14 9V3"></path></svg></div><h3>A Steady Flow Of Tests</h3><p>New ads in testing every week, so the next winner is ready before the last one fades.</p></div>
+      <div class="ncard"><span class="num">04</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"></path></svg></div><h3>Stop Losing Money First</h3><p>Spend that loses money gets found and turned off right at the start.</p></div>
+      <div class="ncard"><span class="num">05</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M14 7h7v7"></path></svg></div><h3>Know When To Scale</h3><p>Simple rules for when to cut, keep or scale an ad, so you stop guessing.</p></div>
+      <div class="ncard"><span class="num">06</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 018 0v4"></path></svg></div><h3>Yours To Keep</h3><p>Everything we build lives in your account and belongs to you.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. How it works -->
+<section class="navysec" id="how">
+  <div class="wrap">
+    <span class="lbl">How it works</span>
+    <h2 class="h2c">Six weeks, inside your own ad account.</h2>
+    <p class="subc">I'm with you the whole way, so by the end you know how to run it yourself. The full week-by-week plan comes on the call.</p>
+    <div class="grid3">
+      <div class="ncard"><span class="num">01</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4a7 7 0 100 14 7 7 0 000-14zM21 21l-5-5"></path></svg></div><h3>Find The Leaks</h3><p>We audit your account live and turn off the spend that's losing you money.</p></div>
+      <div class="ncard"><span class="num">02</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V10l7-6 7 6v11M9 21v-6h6v6"></path></svg></div><h3>Build The System</h3><p>Tracking, a simple account structure and a routine for testing new ads, all in your account.</p></div>
+      <div class="ncard"><span class="num">03</span><div class="ic"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></div><h3>Run It Yourself</h3><p>By week 6 you're running it on your own, with a plan for what's next.</p></div>
+    </div>
+    <div class="after"><a href="{{CALENDLY_URL}}" class="btn btn-gold btn-lg">Get Your Free Ads Breakdown</a></div>
+  </div>
+</section>
+
+<!-- 6b. What you keep -->
+<section>
+  <div class="wrap">
+    <span class="lbl">What you keep</span>
+    <h2 class="h2c">Every tool. Yours to keep.</h2>
+    <p class="subc">Built into your account and your business, ready to use long after week 6.</p>
+    <div class="tools"><div class="tool"><div class="art">Profit Tracker</div><div class="body"><div class="meta"><span>Sheet</span><span class="tag">Included</span></div><h3>Profit Tracker</h3><p>Revenue, ad spend and product costs in, break-even and real profit out.</p></div></div><div class="tool"><div class="art">Column Layout</div><div class="body"><div class="meta"><span>Setup</span><span class="tag">Included</span></div><h3>Ads Manager Columns</h3><p>The exact columns to watch, set up in your account on day one.</p></div></div><div class="tool"><div class="art">Account Map</div><div class="body"><div class="meta"><span>Map</span><span class="tag">Included</span></div><h3>Account Structure Map</h3><p>What each campaign is for, its budget, and how to name new ads.</p></div></div><div class="tool"><div class="art">Angle Bank</div><div class="body"><div class="meta"><span>Doc</span><span class="tag">Included</span></div><h3>Creative Brief &amp; Angle Bank</h3><p>Ad angles pulled from your own reviews, plus a brief for each one.</p></div></div><div class="tool"><div class="art">Testing Tracker</div><div class="body"><div class="meta"><span>Tracker</span><span class="tag">Included</span></div><h3>Testing Tracker</h3><p>Every test logged: what ran, the results and the decision made.</p></div></div><div class="tool"><div class="art">90-Day Plan</div><div class="body"><div class="meta"><span>Plan</span><span class="tag">Included</span></div><h3>90-Day Plan</h3><p>What to test each month after the program, so you keep going.</p></div></div></div>
+  </div>
+</section>
+
+
+<!-- 7. 3 steps -->
+<section style="background:var(--bone-2)">
+  <div class="wrap">
+    <span class="lbl">3 simple steps</span>
+    <h2 class="h2c">Get started in 3 steps</h2>
+    <div class="grid3 steps">
+      <div class="ncard"><div class="ic">1</div><h3>Answer A Few Questions</h3><p>Two minutes about your brand, your revenue and your ads.</p></div>
+      <div class="ncard"><div class="ic">2</div><h3>We Look At Your Ads</h3><p>On the call we go through your account together and see if the program fits.</p></div>
+      <div class="ncard"><div class="ic">3</div><h3>Start Building</h3><p>If it's a fit, we start with a live audit of your account.</p></div>
+    </div>
+    <div class="after"><a href="{{CALENDLY_URL}}" class="btn btn-gold btn-lg">Get Your Free Ads Breakdown</a></div>
+  </div>
+</section>
+
+<!-- 8. Fit -->
+<section id="fit">
+  <div class="wrap">
+    <h2 class="fit-title">Who it's for</h2>
+    <div class="fit-grid">
+      <div class="fit-col yes"><h3>A fit if you</h3><ul>
+        <li>Run an ecommerce brand doing $10k to $100k a month</li>
+        <li>Can put at least $2,000 a month into Meta ads</li>
+        <li>Are tired of paying an agency and want to own the system yourself</li>
+        <li>Will show up to the calls and do each week's build</li></ul></div>
+      <div class="fit-col no"><h3>Not a fit if you</h3><ul>
+        <li>Are under $10k a month or don't have budget to test ads</li>
+        <li>Want someone else to run everything. Past $100k a month? Ask about done-for-you</li>
+        <li>Expect one viral ad to fix the business</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8b. Guarantee -->
+<section style="background:var(--bone-2)">
+  <div class="wrap">
+    <div class="guarbox">
+      <span class="eyebrow">The guarantee</span>
+      <h2>Built and running by week 6, or I keep going for free.</h2>
+      <p>If your system isn't built and running by the end of week 6, I keep working with you for free until it is. All you have to do is show up to the calls and do the work each week.</p>
+      <a href="{{CALENDLY_URL}}" class="btn btn-gold btn-lg">Get Your Free Ads Breakdown</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- 9. FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <span class="lbl" style="text-align:left">Questions</span>
+    <h2>Frequently asked questions</h2>
+    <div class="faq-list">
+      <details><summary>Do I have to stop my current ads?</summary><div class="ans">No. They keep running the whole time. The only thing we turn off is spend that's losing you money.</div></details>
+      <details><summary>I have an agency right now. Can I still join?</summary><div class="ans">Yes. You can go through the program while they're still running things and take it in-house once your system is built.</div></details>
+      <details><summary>Who makes the ads?</summary><div class="ans">We do. We have our own creative agency, so we write the briefs and make the ads for you. You just approve them.</div></details>
+      <details><summary>When will I see results?</summary><div class="ans">Losing spend gets turned off in week 1, and your first test goes live in week 3. Revenue also depends on your product and offer, so I won't promise a number.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Final CTA -->
+<section class="cta" id="apply">
+  <div class="wrap">
+    <span class="lbl" style="color:var(--gold)">Get started</span>
+    <h2>See if you're a fit.</h2>
+    <div class="panel">
+      <ul>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A live audit of your ad account</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>6 weekly calls inside your account</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Every tracker and tool</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything you build is yours to keep</li>
+      </ul>
+      <a href="{{CALENDLY_URL}}" class="btn btn-gold btn-lg">Get Your Free Ads Breakdown</a>
+      <p class="note">Only 3 founding client spots.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <a href="#top" class="logo">CATALYST</a>
+      <div class="foot-links"><a href="{{CALENDLY_URL}}">Book a call</a></div>
+    </div>
+    <div class="copyright">© 2026 CATALYST. Results vary by brand and aren't guaranteed. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  (function(){var h=document.getElementById('hdr');function f(){h.classList.toggle('scrolled',window.scrollY>40)}f();window.addEventListener('scroll',f,{passive:true});})();
+</script>
+</body>
+</html>
