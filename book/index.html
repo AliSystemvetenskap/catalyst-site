@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CATALYST | Book Your Free Ads Breakdown</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bone:#F3F1EA;--navy-deep:#111A2E;--gold:#D9B45C}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--navy-deep);color:var(--bone);font-family:Archivo,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  header{padding:26px 24px 8px;text-align:center}
+  .logo{font-family:Fraunces,Georgia,serif;font-size:26px;font-weight:500;letter-spacing:.04em;color:var(--bone);text-decoration:none}
+  .intro{text-align:center;padding:18px 20px 0}
+  h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(30px,6vw,46px);line-height:1.08;margin-bottom:8px}
+  h1 .it{font-style:italic;color:var(--gold)}
+  .intro p{color:rgba(243,241,234,.72);font-size:15.5px}
+  .calendly-inline-widget{min-width:300px;height:1000px;max-width:1000px;margin:0 auto}
+</style>
+</head>
+<body>
+<header><a class="logo" href="/">CATALYST</a></header>
+<div class="intro">
+  <h1>Book your <span class="it">free ads breakdown.</span></h1>
+  <p>Pick a time that works for you.</p>
+</div>
+<div class="calendly-inline-widget" data-url="https://calendly.com/aloshmarketing/free-ads-breakdown?hide_gdpr_banner=1&background_color=111a2e&text_color=f3f1ea&primary_color=d9b45c"></div>
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+  window.addEventListener('message', function (e) {
+    if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') {
+      window.location.href = '/booked/';
+    }
+  });
+</script>
+</body>
+</html>
