@@ -7,6 +7,8 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://calendly.com">
+<link rel="preconnect" href="https://assets.calendly.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{--bone:#F3F1EA;--navy-deep:#111A2E;--navy:#1A2744;--gold:#D9B45C;--muted:rgba(243,241,234,.66);--line:rgba(243,241,234,.18)}
@@ -70,39 +72,33 @@ fbq("track","ViewContent",{content_name:"Book page"});
   <button class="back" id="back" type="button">← Back</button>
 
   <section class="step" data-k="name">
-    <div class="num">Free ads breakdown · 1 of 7</div>
+    <div class="num">Free ads breakdown · 1 of 6</div>
     <h1>First, what's <span class="it">your name?</span></h1>
     <p class="sub">A few quick questions so we can prepare your breakdown before the call.</p>
     <div class="two"><input id="first" placeholder="First name" autocomplete="given-name"><input id="last" placeholder="Last name" autocomplete="family-name"></div>
   </section>
 
   <section class="step" data-k="email">
-    <div class="num">2 of 7</div>
+    <div class="num">2 of 6</div>
     <h1>What's your <span class="it">email?</span></h1>
     <p class="sub">The calendar invite and Google Meet link go here.</p>
     <div class="ew"><input id="email" type="email" placeholder="you@brand.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"><div class="sugg" id="sugg"></div></div>
   </section>
 
-  <section class="step" data-k="brand">
-    <div class="num">3 of 7</div>
-    <h1>What's the name of <span class="it">your brand?</span></h1>
-    <input id="brand" placeholder="Brand name">
-  </section>
-
   <section class="step" data-k="site">
-    <div class="num">4 of 7</div>
-    <h1>Drop your <span class="it">website.</span></h1>
-    <input id="site" placeholder="yourbrand.com" inputmode="url" autocomplete="url">
+    <div class="num">3 of 6</div>
+    <h1>Drop your brand's <span class="it">website.</span></h1>
+    <input id="site" placeholder="yourbrand.com" inputmode="url" autocomplete="url" autocapitalize="off" spellcheck="false">
   </section>
 
   <section class="step" data-k="ig">
-    <div class="num">5 of 7</div>
+    <div class="num">4 of 6</div>
     <h1>What's your brand's <span class="it">Instagram?</span></h1>
-    <input id="ig" placeholder="@yourbrand">
+    <input id="ig" placeholder="@yourbrand" autocapitalize="off" spellcheck="false">
   </section>
 
   <section class="step" data-k="rev">
-    <div class="num">6 of 7</div>
+    <div class="num">5 of 6</div>
     <h1>How much revenue is your brand <span class="it">doing monthly?</span></h1>
     <div class="opts" data-field="rev">
       <button class="opt" type="button"><kbd>A</kbd>Under $10k</button>
@@ -114,7 +110,7 @@ fbq("track","ViewContent",{content_name:"Book page"});
   </section>
 
   <section class="step" data-k="spend">
-    <div class="num">7 of 7</div>
+    <div class="num">6 of 6</div>
     <h1>How much are you spending on <span class="it">Meta ads</span> per month?</h1>
     <div class="opts" data-field="spend">
       <button class="opt" type="button"><kbd>A</kbd>Under $1k</button>
@@ -144,72 +140,127 @@ fbq("track","ViewContent",{content_name:"Book page"});
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 <script>
 const BLOCK_UNDER_10K = true; // under $10k/month goes to the "not a fit yet" screen, not the calendar
+const SHEET_URL = '';         // Google Apps Script web app URL (lead log). Empty = logging off.
 const CAL = 'https://calendly.com/aloshmarketing/free-ads-breakdown?hide_gdpr_banner=1&hide_event_type_details=1';
-const order = ['name','email','brand','site','ig','rev','spend'];
+const KEY = 'catalyst_form_v2';
+const order = ['name','email','site','ig','rev','spend'];
 const steps = [...document.querySelectorAll('.step')];
 const S = k => steps.find(s => s.dataset.k === k);
-const v = id => document.getElementById(id).value.trim();
-const ans = {rev:'', spend:''};
-let cur = 0, history = [];
+const el = id => document.getElementById(id);
+const v = id => el(id).value.trim();
+let ans = {rev:'', spend:''}, cur = 0, history = [];
+let leadId = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+
+// ---- cleaners ----
+const cleanSite = s => s.trim().replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/+$/, '');
+const brandFromSite = s => { const host = cleanSite(s).split('/')[0]; const name = host.split('.')[0] || host;
+  return name.split(/[-_]/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); };
+const cleanIg = s => { s = s.trim(); const m = s.match(/instagram\.com\/([A-Za-z0-9._]+)/i); if (m) s = m[1];
+  s = s.replace(/\s+/g, '').replace(/^@+/, ''); return s ? '@' + s : ''; };
+
+// ---- save / restore progress ----
+function save(){ try { localStorage.setItem(KEY, JSON.stringify({ first:v('first'), last:v('last'), email:v('email'),
+  site:v('site'), ig:v('ig'), ans, cur, leadId })); } catch(e){} }
+function restore(){ try { const d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (!d) return;
+  ['first','last','email','site','ig'].forEach(k => { if (d[k]) el(k).value = d[k]; });
+  ans = d.ans || ans; leadId = d.leadId || leadId;
+  ['rev','spend'].forEach(f => S(f).querySelectorAll('.opt').forEach(b => b.classList.toggle('sel', b.textContent.slice(1).trim() === ans[f])));
+  const c = Math.min(d.cur || 0, order.length - 1);
+  // only resume where every earlier step is still valid
+  for (let i = 0; i < c; i++) { if (valid(order[i])) return; }
+  cur = c; history = order.slice(0, c);
+} catch(e){} }
+
+// ---- lead log (Google Sheet) ----
+function log(status){
+  if (!SHEET_URL) return;
+  const data = { id: leadId, status, first: v('first'), last: v('last'), email: v('email'),
+    brand: brandFromSite(v('site')), website: cleanSite(v('site')), instagram: cleanIg(v('ig')),
+    revenue: ans.rev, spend: ans.spend, page: location.href, ref: document.referrer };
+  try { fetch(SHEET_URL, { method:'POST', mode:'no-cors', keepalive:true,
+    headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(data) }); } catch(e){}
+}
 
 function show(k){
   steps.forEach(s => s.classList.toggle('on', s.dataset.k === k));
   const i = order.indexOf(k);
-  document.getElementById('prog').style.width = (k==='cal'||k==='nofit' ? 100 : (i/order.length*100)) + '%';
-  const formStep = i >= 0;
-  document.getElementById('nav').style.display = formStep && !['rev','spend'].includes(k) ? 'flex' : 'none';
-  document.getElementById('back').classList.toggle('on', history.length > 0 && k !== 'cal');
-  document.getElementById('err').textContent = '';
+  el('prog').style.width = (k==='cal'||k==='nofit' ? 100 : (i/order.length*100)) + '%';
+  el('nav').style.display = i >= 0 && !['rev','spend'].includes(k) ? 'flex' : 'none';
+  el('back').classList.toggle('on', history.length > 0 && k !== 'cal');
+  el('err').textContent = '';
   const inp = S(k).querySelector('input'); if (inp) setTimeout(() => inp.focus(), 60);
   window.scrollTo(0, 0);
 }
+// every step must be filled correctly before the next one opens
 function valid(k){
-  if (k==='name') return v('first') ? '' : 'Please add your first name.';
-  if (k==='email') return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email')) ? '' : 'Please add a valid email.';
-  if (k==='brand') return v('brand') ? '' : 'Please add your brand name.';
-  if (k==='site') return v('site') ? '' : 'Please add your website.';
-  if (k==='ig') return v('ig') ? '' : 'Please add your Instagram handle.';
+  if (k==='name') return v('first').length < 2 ? 'Please add your first name.' : v('last').length < 1 ? 'Please add your last name.' : '';
+  if (k==='email') return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v('email')) ? '' : 'Please add a valid email.';
+  if (k==='site') return /^[^\s\/]+\.[a-z]{2,}(\/\S*)?$/i.test(cleanSite(v('site'))) ? '' : 'Please add your website, like yourbrand.com';
+  if (k==='ig') return /^@[A-Za-z0-9._]{2,30}$/.test(cleanIg(v('ig'))) ? '' : 'Please add your Instagram handle, like @yourbrand';
+  if (k==='rev') return ans.rev ? '' : 'Please pick one.';
+  if (k==='spend') return ans.spend ? '' : 'Please pick one.';
   return '';
 }
-function go(nextK){ history.push(order[cur]); cur = order.indexOf(nextK); show(nextK); }
+function go(nextK){ history.push(order[cur]); cur = order.indexOf(nextK); save(); show(nextK); }
 function next(){
-  const k = order[cur]; const e = valid(k);
-  if (e){ document.getElementById('err').textContent = e; return; }
+  const k = order[cur];
+  if (k==='site') el('site').value = cleanSite(v('site'));
+  if (k==='ig') el('ig').value = cleanIg(v('ig'));
+  const e = valid(k);
+  if (e){ el('err').textContent = e; S(k).querySelector('input')?.focus(); return; }
   if (cur < order.length - 1) go(order[cur+1]); else finish();
 }
 function finish(){
-  if (BLOCK_UNDER_10K && ans.rev === 'Under $10k'){ history.push(order[cur]); show('nofit'); return; }
+  for (const k of order) { const e = valid(k); if (e) { cur = order.indexOf(k); history = order.slice(0, cur); show(k); el('err').textContent = e; return; } }
+  save();
+  if (BLOCK_UNDER_10K && ans.rev === 'Under $10k'){ log('Under $10k (no calendar)'); history.push(order[cur]); show('nofit'); return; }
+  log('Form done, not booked yet');
   history.push(order[cur]); show('cal');
-  const m = document.getElementById('main'); m.style.paddingBottom = '0'; m.style.flex = '0 0 auto';
+  const m = el('main'); m.style.paddingBottom = '0'; m.style.flex = '0 0 auto';
   fbq('trackCustom','FormCompleted',{revenue:ans.rev, spend:ans.spend});
-  const box = document.getElementById('cal'); box.style.height = (window.innerWidth < 700 ? 1150 : 760) + 'px';
+  const pre = el('calpre'); if (pre) pre.remove();
+  const box = el('cal'); box.style.height = (window.innerWidth < 700 ? 1150 : 760) + 'px';
   const f = { name: (v('first') + ' ' + v('last')).trim(), email: v('email'),
-    a1: v('brand'), a2: v('site'), a3: v('ig'), a4: ans.rev, a5: ans.spend };
+    a1: brandFromSite(v('site')), a2: cleanSite(v('site')), a3: cleanIg(v('ig')), a4: ans.rev, a5: ans.spend };
   const qs = Object.entries(f).map(([k, x]) => k + '=' + encodeURIComponent(x)).join('&');
   const init = () => Calendly.initInlineWidget({ url: CAL + '&' + qs, parentElement: box });
   window.Calendly ? init() : window.addEventListener('load', init);
 }
-document.getElementById('next').onclick = next;
+el('next').onclick = next;
 document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && order[cur] && !['rev','spend'].includes(order[cur]) && S(order[cur]).classList.contains('on')) { e.preventDefault(); next(); }
-  if (['rev','spend'].includes(order[cur]) && S(order[cur]).classList.contains('on')) {
-    const btns = [...S(order[cur]).querySelectorAll('.opt')]; const i = e.key.toUpperCase().charCodeAt(0) - 65;
+  const k = order[cur]; if (!k || !S(k).classList.contains('on')) return;
+  if (e.key === 'Enter' && !['rev','spend'].includes(k)) { e.preventDefault(); next(); }
+  if (['rev','spend'].includes(k)) {
+    const btns = [...S(k).querySelectorAll('.opt')]; const i = e.key.toUpperCase().charCodeAt(0) - 65;
     if (e.key.length === 1 && btns[i]) btns[i].click();
   }
 });
+['first','last','email','site','ig'].forEach(id => el(id).addEventListener('input', save));
+el('ig').addEventListener('blur', () => { if (v('ig')) el('ig').value = cleanIg(v('ig')); });
+el('site').addEventListener('blur', () => { if (v('site')) el('site').value = cleanSite(v('site')); });
 document.querySelectorAll('.opts').forEach(box => box.querySelectorAll('.opt').forEach(b => b.onclick = () => {
   box.querySelectorAll('.opt').forEach(x => x.classList.remove('sel')); b.classList.add('sel');
-  ans[box.dataset.field] = b.textContent.slice(1).trim();
+  ans[box.dataset.field] = b.textContent.slice(1).trim(); save();
   setTimeout(next, 260);
 }));
-document.getElementById('back').onclick = () => {
+el('back').onclick = () => {
   const prev = history.pop(); if (!prev) return;
-  document.getElementById('cal').innerHTML = ''; document.getElementById('cal').style.height = ''; document.getElementById('main').style.paddingBottom = ''; document.getElementById('main').style.flex = '';
-  cur = order.indexOf(prev); show(prev);
+  el('cal').innerHTML = ''; el('cal').style.height = ''; el('main').style.paddingBottom = ''; el('main').style.flex = '';
+  cur = order.indexOf(prev); save(); show(prev);
 };
 window.addEventListener('message', e => {
-  if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') window.location.href = '/booked/';
+  if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') {
+    log('Booked'); try { localStorage.removeItem(KEY); } catch(_){}
+    setTimeout(() => { window.location.href = '/booked/'; }, 350);
+  }
 });
+// warm up the calendar in the background so the last step opens fast
+window.addEventListener('load', () => setTimeout(() => {
+  if (el('cal').querySelector('iframe')) return;
+  const f = document.createElement('iframe'); f.id = 'calpre'; f.src = CAL; f.tabIndex = -1; f.setAttribute('aria-hidden','true');
+  f.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;left:-9999px;top:0;border:0';
+  document.body.appendChild(f);
+}, 1500));
 // email domain dropdown: type the part before @, tap a provider
 (() => {
   const DOMAINS = ['gmail.com','outlook.com','icloud.com','hotmail.com','yahoo.com'];
@@ -239,7 +290,7 @@ window.addEventListener('message', e => {
     else if (e.key === 'Escape') close();
   });
 })();
-show('name');
+restore(); show(order[cur]);
 </script>
 </body>
 </html>
