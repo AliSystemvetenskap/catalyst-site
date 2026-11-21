@@ -175,7 +175,7 @@ function finish(){
   history.push(order[cur]); show('cal');
   const m = document.getElementById('main'); m.style.paddingBottom = '0'; m.style.flex = '0 0 auto';
   fbq('trackCustom','FormCompleted',{revenue:ans.rev, spend:ans.spend});
-  const box = document.getElementById('cal');
+  const box = document.getElementById('cal'); box.style.height = (window.innerWidth < 700 ? 1150 : 760) + 'px';
   const f = { name: (v('first') + ' ' + v('last')).trim(), email: v('email'),
     a1: v('brand'), a2: v('site'), a3: v('ig'), a4: ans.rev, a5: ans.spend };
   const qs = Object.entries(f).map(([k, x]) => k + '=' + encodeURIComponent(x)).join('&');
@@ -197,7 +197,7 @@ document.querySelectorAll('.opts').forEach(box => box.querySelectorAll('.opt').f
 }));
 document.getElementById('back').onclick = () => {
   const prev = history.pop(); if (!prev) return;
-  document.getElementById('cal').innerHTML = ''; document.getElementById('main').style.paddingBottom = ''; document.getElementById('main').style.flex = '';
+  document.getElementById('cal').innerHTML = ''; document.getElementById('cal').style.height = ''; document.getElementById('main').style.paddingBottom = ''; document.getElementById('main').style.flex = '';
   cur = order.indexOf(prev); show(prev);
 };
 window.addEventListener('message', e => {
