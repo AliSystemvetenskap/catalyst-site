@@ -42,6 +42,13 @@
   .back{background:none;border:0;color:var(--muted);font:500 15px Archivo,sans-serif;cursor:pointer;margin-bottom:26px;display:none}
   .back.on{display:inline-block}
   .err{color:#ff8a8a;font-size:14px;margin-top:10px;min-height:18px}
+  .ew{position:relative}
+  .sugg{position:absolute;left:0;right:0;top:100%;margin-top:6px;background:#1B2438;border:1px solid var(--line);border-radius:10px;overflow:hidden;z-index:5;display:none;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  .sugg.on{display:block}
+  .sugg button{display:block;width:100%;text-align:left;background:none;border:0;border-top:1px solid rgba(243,241,234,.08);color:var(--bone);font:500 18px Archivo,sans-serif;padding:14px 16px;cursor:pointer}
+  .sugg button:first-child{border-top:0}
+  .sugg button b{color:var(--gold);font-weight:600}
+  .sugg button:hover,.sugg button.act{background:rgba(217,180,92,.12)}
   #cal{max-width:1000px;margin:0 auto;width:100%}
   .calendly-inline-widget{min-width:300px;height:1060px}
   .wide{max-width:1000px}
@@ -73,7 +80,7 @@ fbq("track","ViewContent",{content_name:"Book page"});
     <div class="num">2 of 7</div>
     <h1>What's your <span class="it">email?</span></h1>
     <p class="sub">The calendar invite and Google Meet link go here.</p>
-    <input id="email" type="email" placeholder="you@brand.com" autocomplete="email" inputmode="email">
+    <div class="ew"><input id="email" type="email" placeholder="you@brand.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"><div class="sugg" id="sugg"></div></div>
   </section>
 
   <section class="step" data-k="brand">
@@ -203,6 +210,35 @@ document.getElementById('back').onclick = () => {
 window.addEventListener('message', e => {
   if (e.origin === 'https://calendly.com' && e.data && e.data.event === 'calendly.event_scheduled') window.location.href = '/booked/';
 });
+// email domain dropdown: type the part before @, tap a provider
+(() => {
+  const DOMAINS = ['gmail.com','outlook.com','icloud.com','hotmail.com','yahoo.com'];
+  const inp = document.getElementById('email'), box = document.getElementById('sugg');
+  let act = 0, items = [];
+  const close = () => { box.classList.remove('on'); items = []; };
+  const pick = d => { inp.value = d; close(); inp.focus(); };
+  function render(){
+    const val = inp.value.trim(); const at = val.indexOf('@');
+    const user = at < 0 ? val : val.slice(0, at), part = at < 0 ? '' : val.slice(at + 1).toLowerCase();
+    if (!user || /\s/.test(user)) return close();
+    items = DOMAINS.filter(d => d.startsWith(part) && d !== part).map(d => user + '@' + d);
+    if (!items.length) return close();
+    act = 0;
+    box.innerHTML = items.map((x, i) => `<button type="button" class="${i===0?'act':''}">${x.replace(/@.*/, '')}<b>@${x.split('@')[1]}</b></button>`).join('');
+    [...box.children].forEach((b, i) => b.onmousedown = e => { e.preventDefault(); pick(items[i]); });
+    box.classList.add('on');
+  }
+  inp.addEventListener('input', render);
+  inp.addEventListener('blur', () => setTimeout(close, 150));
+  inp.addEventListener('keydown', e => {
+    if (!box.classList.contains('on')) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault(); act = (act + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      [...box.children].forEach((b, i) => b.classList.toggle('act', i === act));
+    } else if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); e.stopPropagation(); pick(items[act]); }
+    else if (e.key === 'Escape') close();
+  });
+})();
 show('name');
 </script>
 </body>
