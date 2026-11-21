@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://calendly.com">
 <link rel="preconnect" href="https://assets.calendly.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/css/intlTelInput.min.css">
 <style>
   :root{--bone:#F3F1EA;--navy-deep:#111A2E;--navy:#1A2744;--gold:#D9B45C;--muted:rgba(243,241,234,.66);--line:rgba(243,241,234,.18)}
   *{box-sizing:border-box;margin:0;padding:0}
@@ -51,6 +52,17 @@
   .sugg button:first-child{border-top:0}
   .sugg button b{color:var(--gold);font-weight:600}
   .sugg button:hover,.sugg button.act{background:rgba(217,180,92,.12)}
+  /* phone field (intl-tel-input) */
+  .iti{width:100%;display:block;--iti-path-flags-1x:url('https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/img/flags.webp');--iti-path-flags-2x:url('https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/img/flags@2x.webp');--iti-path-globe-1x:url('https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/img/globe.webp');--iti-path-globe-2x:url('https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/img/globe@2x.webp')}
+  .iti__selected-dial-code{color:var(--bone);font:500 22px Archivo,sans-serif}
+  .iti__country-container .iti__selected-country{background:none!important}
+  .iti__arrow{border-top-color:var(--muted)}.iti__arrow--up{border-bottom-color:var(--muted)}
+  .iti__dropdown-content{background:#1B2438;border:1px solid var(--line);border-radius:10px;color:var(--bone);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  .iti__search-input{background:#111A2E;color:var(--bone);font-size:16px;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .iti__country{padding:10px 12px;font:500 16px Archivo,sans-serif}
+  .iti__country.iti__highlight{background:rgba(217,180,92,.14)}
+  .iti__dial-code{color:var(--muted)}
+  .iti--fullscreen-popup.iti--container{background:rgba(0,0,0,.6)}
   #cal{max-width:1000px;margin:0 auto;width:100%}
   .calendly-inline-widget{min-width:300px;height:1060px}
   .wide{max-width:1000px}
@@ -72,33 +84,40 @@ fbq("track","ViewContent",{content_name:"Book page"});
   <button class="back" id="back" type="button">← Back</button>
 
   <section class="step" data-k="name">
-    <div class="num">Free ads breakdown · 1 of 6</div>
+    <div class="num">Free ads breakdown · 1 of 7</div>
     <h1>First, what's <span class="it">your name?</span></h1>
     <p class="sub">A few quick questions so we can prepare your breakdown before the call.</p>
     <div class="two"><input id="first" placeholder="First name" autocomplete="given-name"><input id="last" placeholder="Last name" autocomplete="family-name"></div>
   </section>
 
   <section class="step" data-k="email">
-    <div class="num">2 of 6</div>
+    <div class="num">2 of 7</div>
     <h1>What's your <span class="it">email?</span></h1>
     <p class="sub">The calendar invite and Google Meet link go here.</p>
     <div class="ew"><input id="email" type="email" placeholder="you@brand.com" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false"><div class="sugg" id="sugg"></div></div>
   </section>
 
+  <section class="step" data-k="phone">
+    <div class="num">3 of 7</div>
+    <h1>What's the best <span class="it">number</span> to reach you?</h1>
+    <p class="sub">So we can confirm your call. Outside the US? Tap the flag to pick your country.</p>
+    <input id="phone" type="tel" autocomplete="tel" inputmode="tel">
+  </section>
+
   <section class="step" data-k="site">
-    <div class="num">3 of 6</div>
+    <div class="num">4 of 7</div>
     <h1>Drop your brand's <span class="it">website.</span></h1>
     <input id="site" placeholder="yourbrand.com" inputmode="url" autocomplete="url" autocapitalize="off" spellcheck="false">
   </section>
 
   <section class="step" data-k="ig">
-    <div class="num">4 of 6</div>
+    <div class="num">5 of 7</div>
     <h1>What's your brand's <span class="it">Instagram?</span></h1>
     <input id="ig" placeholder="@yourbrand" autocapitalize="off" spellcheck="false">
   </section>
 
   <section class="step" data-k="rev">
-    <div class="num">5 of 6</div>
+    <div class="num">6 of 7</div>
     <h1>How much revenue is your brand <span class="it">doing monthly?</span></h1>
     <div class="opts" data-field="rev">
       <button class="opt" type="button"><kbd>A</kbd>Under $10k</button>
@@ -110,7 +129,7 @@ fbq("track","ViewContent",{content_name:"Book page"});
   </section>
 
   <section class="step" data-k="spend">
-    <div class="num">6 of 6</div>
+    <div class="num">7 of 7</div>
     <h1>How much are you spending on <span class="it">Meta ads</span> per month?</h1>
     <div class="opts" data-field="spend">
       <button class="opt" type="button"><kbd>A</kbd>Under $1k</button>
@@ -138,12 +157,13 @@ fbq("track","ViewContent",{content_name:"Book page"});
 <div id="cal"></div>
 
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/intlTelInput.min.js"></script>
 <script>
 const BLOCK_UNDER_10K = true; // under $10k/month goes to the "not a fit yet" screen, not the calendar
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzqyTLL47dfVY40f2fLGHw-cG_Hjn8q_5qAlWqKzjHIp_OwvELhY2amHK7jPbBX-Cw/exec';         // Google Apps Script web app URL (lead log). Empty = logging off.
 const CAL = 'https://calendly.com/aloshmarketing/free-ads-breakdown?hide_gdpr_banner=1&hide_event_type_details=1';
 const KEY = 'catalyst_form_v2';
-const order = ['name','email','site','ig','rev','spend'];
+const order = ['name','email','phone','site','ig','rev','spend'];
 const steps = [...document.querySelectorAll('.step')];
 const S = k => steps.find(s => s.dataset.k === k);
 const el = id => document.getElementById(id);
@@ -155,14 +175,30 @@ let leadId = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
 const cleanSite = s => s.trim().replace(/^https?:\/\//i, '').replace(/^www\./i, '').replace(/\/+$/, '');
 const brandFromSite = s => { const host = cleanSite(s).split('/')[0]; const name = host.split('.')[0] || host;
   return name.split(/[-_]/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '); };
+// phone: digits with a leading +; 10 US digits get +1
+const cleanPhone = s => { s = s.trim(); const intl = s.startsWith('+') || s.startsWith('00');
+  let d = s.replace(/\D/g, ''); if (s.startsWith('00')) d = d.slice(2);
+  if (!intl && d.length === 11 && d[0] === '1') return '+' + d;
+  if (!intl && d.length === 10) return '+1' + d;
+  return d ? '+' + d : ''; };
+let iti = null;
+try { iti = window.intlTelInput(document.getElementById('phone'), {
+  initialCountry: 'us', countryOrder: ['us','ca','gb','au'], separateDialCode: true, strictMode: true,
+  utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/utils.js' }); } catch(e){}
+// full number like +15551234567 (falls back to the simple cleaner if the library didn't load)
+const phoneFull = () => (iti && window.intlTelInput.utils && iti.getNumber()) || cleanPhone(v('phone'));
+const phoneOk = () => {
+  if (iti && window.intlTelInput.utils) return (iti.isValidNumberPrecise ? iti.isValidNumberPrecise() : iti.isValidNumber());
+  const n = cleanPhone(v('phone')).length - 1; return n >= 10 && n <= 15; };
 const cleanIg = s => { s = s.trim(); const m = s.match(/instagram\.com\/([A-Za-z0-9._]+)/i); if (m) s = m[1];
   s = s.replace(/\s+/g, '').replace(/^@+/, ''); return s ? '@' + s : ''; };
 
 // ---- save / restore progress ----
-function save(){ try { localStorage.setItem(KEY, JSON.stringify({ first:v('first'), last:v('last'), email:v('email'),
+function save(){ try { localStorage.setItem(KEY, JSON.stringify({ first:v('first'), last:v('last'), email:v('email'), phone:phoneFull(),
   site:v('site'), ig:v('ig'), ans, cur, leadId })); } catch(e){} }
 function restore(){ try { const d = JSON.parse(localStorage.getItem(KEY) || 'null'); if (!d) return;
   ['first','last','email','site','ig'].forEach(k => { if (d[k]) el(k).value = d[k]; });
+  if (d.phone) { if (iti) iti.setNumber(d.phone); else el('phone').value = d.phone; }
   ans = d.ans || ans; leadId = d.leadId || leadId;
   ['rev','spend'].forEach(f => S(f).querySelectorAll('.opt').forEach(b => b.classList.toggle('sel', b.textContent.slice(1).trim() === ans[f])));
   const c = Math.min(d.cur || 0, order.length - 1);
@@ -174,7 +210,7 @@ function restore(){ try { const d = JSON.parse(localStorage.getItem(KEY) || 'nul
 // ---- lead log (Google Sheet) ----
 function log(status){
   if (!SHEET_URL) return;
-  const data = { id: leadId, status, first: v('first'), last: v('last'), email: v('email'),
+  const data = { id: leadId, status, first: v('first'), last: v('last'), email: v('email'), phone: phoneFull(),
     brand: brandFromSite(v('site')), website: cleanSite(v('site')), instagram: cleanIg(v('ig')),
     revenue: ans.rev, spend: ans.spend, page: location.href, ref: document.referrer };
   try { fetch(SHEET_URL, { method:'POST', mode:'no-cors', keepalive:true,
@@ -194,6 +230,7 @@ function show(k){
 // every step must be filled correctly before the next one opens
 function valid(k){
   if (k==='name') return v('first').length < 2 ? 'Please add your first name.' : v('last').length < 1 ? 'Please add your last name.' : '';
+  if (k==='phone') return !v('phone') ? 'Please add your phone number.' : phoneOk() ? '' : "That number doesn't look right. Check the digits and the country.";
   if (k==='email') return /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v('email')) ? '' : 'Please add a valid email.';
   if (k==='site') return /^[^\s\/]+\.[a-z]{2,}(\/\S*)?$/i.test(cleanSite(v('site'))) ? '' : 'Please add your website, like yourbrand.com';
   if (k==='ig') return /^@[A-Za-z0-9._]{2,30}$/.test(cleanIg(v('ig'))) ? '' : 'Please add your Instagram handle, like @yourbrand';
@@ -221,7 +258,7 @@ function finish(){
   const pre = el('calpre'); if (pre) pre.remove();
   const box = el('cal'); box.style.height = (window.innerWidth < 700 ? 1150 : 760) + 'px';
   const f = { name: (v('first') + ' ' + v('last')).trim(), email: v('email'),
-    a1: brandFromSite(v('site')), a2: cleanSite(v('site')), a3: cleanIg(v('ig')), a4: ans.rev, a5: ans.spend };
+    a1: brandFromSite(v('site')), a2: cleanSite(v('site')), a3: cleanIg(v('ig')), a4: ans.rev, a5: ans.spend, a6: phoneFull() };
   const qs = Object.entries(f).map(([k, x]) => k + '=' + encodeURIComponent(x)).join('&');
   const init = () => Calendly.initInlineWidget({ url: CAL + '&' + qs, parentElement: box });
   window.Calendly ? init() : window.addEventListener('load', init);
@@ -235,7 +272,7 @@ document.addEventListener('keydown', e => {
     if (e.key.length === 1 && btns[i]) btns[i].click();
   }
 });
-['first','last','email','site','ig'].forEach(id => el(id).addEventListener('input', save));
+['first','last','email','phone','site','ig'].forEach(id => el(id).addEventListener('input', save));
 el('ig').addEventListener('blur', () => { if (v('ig')) el('ig').value = cleanIg(v('ig')); });
 el('site').addEventListener('blur', () => { if (v('site')) el('site').value = cleanSite(v('site')); });
 document.querySelectorAll('.opts').forEach(box => box.querySelectorAll('.opt').forEach(b => b.onclick = () => {
